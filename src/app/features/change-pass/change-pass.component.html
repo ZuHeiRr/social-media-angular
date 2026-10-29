@@ -1,0 +1,145 @@
+<div class="mx-auto max-w-7xl px-3 py-3.5">
+  <main class="min-w-0">
+    <div class="mx-auto max-w-2xl">
+      <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div class="mb-5 flex items-center gap-3">
+          <span
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#e7f3ff] text-[#1877f2]"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-key-round"
+              aria-hidden="true"
+            >
+              <path
+                d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+              ></path>
+              <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg
+          ></span>
+          <div>
+            <h1 class="text-xl font-extrabold text-slate-900 sm:text-2xl">Change Password</h1>
+            <p class="text-sm text-slate-500">
+              Keep your account secure by using a strong password.
+            </p>
+          </div>
+        </div>
+        <form [formGroup]="changePassForm" (ngSubmit)="submitChangePass()" class="space-y-4">
+          <div>
+            <label class="block"
+              ><span class="mb-1.5 block text-sm font-bold text-slate-700">Current password</span
+              ><input
+                formControlName="password"
+                placeholder="Enter current password"
+                class="w-full rounded-xl border bg-slate-50 px-3 py-2.5 text-sm text-slate-800 outline-none transition border-slate-200 focus:border-[#1877f2] focus:bg-white"
+                type="password"
+                value=""
+                name="currentPassword"
+                fdprocessedid="88a05w"
+            /></label>
+            @if (
+              changePassForm.get('password')?.invalid && changePassForm.get('password')?.touched
+            ) {
+              <div class="text-red-500 text-sm mt-1">
+                <!-- <span class="sr-only"></span> -->
+                @if (changePassForm.get('password')?.hasError('required')) {
+                  <p>current password is required</p>
+                }
+              </div>
+            }
+          </div>
+          <div>
+            <label class="block"
+              ><span class="mb-1.5 block text-sm font-bold text-slate-700">New password</span
+              ><input
+                formControlName="newPassword"
+                placeholder="Enter new password"
+                class="w-full rounded-xl border bg-slate-50 px-3 py-2.5 text-sm text-slate-800 outline-none transition border-slate-200 focus:border-[#1877f2] focus:bg-white"
+                type="password"
+                value=""
+                name="newPassword"
+                fdprocessedid="fjs3nb"
+            /></label>
+            @if (
+              changePassForm.get('newPassword')?.invalid &&
+              changePassForm.get('newPassword')?.touched
+            ) {
+              <div class="text-red-500 text-sm mt-1">
+                <!-- <span class="sr-only"></span> -->
+                @if (changePassForm.get('newPassword')?.hasError('required')) {
+                  <p>newPassword is required</p>
+                }
+
+                @if (changePassForm.get('newPassword')?.hasError('pattern')) {
+                  <span class="mt-1 block text-xs text-red-500"
+                    >At least 8 characters with uppercase, lowercase, number, and special
+                    character.</span
+                  >
+                }
+              </div>
+            }
+          </div>
+          <div>
+            <label class="block"
+              ><span class="mb-1.5 block text-sm font-bold text-slate-700"
+                >Confirm new password</span
+              ><input
+                formControlName="rePassword"
+                placeholder="Re-enter new password"
+                class="w-full rounded-xl border bg-slate-50 px-3 py-2.5 text-sm text-slate-800 outline-none transition border-slate-200 focus:border-[#1877f2] focus:bg-white"
+                type="password"
+                value=""
+                name="confirmPassword"
+                fdprocessedid="si6it"
+            /></label>
+            @if (
+              changePassForm.get('rePassword')?.invalid && changePassForm.get('rePassword')?.touched
+            ) {
+              <div class="text-red-500 text-sm mt-1">
+                <!-- <span class="sr-only"></span> -->
+                @if (changePassForm.get('rePassword')?.hasError('required')) {
+                  <p>Please confirm your new password.</p>
+                }
+                @if (changePassForm.get('rePassword')?.hasError('mismatch')) {
+                  <p>repassword do not match</p>
+                }
+              </div>
+            }
+          </div>
+
+          @if (successMsg()) {
+            <span
+              class="mt-1 block text-xs text-success bg-green-200 px-3.5 py-1.5 border-success rounded-base"
+              >{{ successMsg() }}</span
+            >
+          }
+          @if (errMsg() == 'invalid token .. login again') {
+            <span
+              class="mt-1 block text-xs text-red-500 bg-red-100 px-3.5 py-2.5 border-red-600 rounded-base"
+              >You just changed your password; try again later.</span
+            >
+          }
+          @if (errMsg() !== 'invalid token .. login again' && errMsg()) {
+            <span
+              class="mt-1 block text-xs text-red-500 bg-red-100 px-3.5 py-2.5 border-red-600 rounded-base"
+              >{{ errMsg() }}</span
+            >
+          }
+
+          <button
+            type="submit"
+            class="inline-flex w-full items-center justify-center rounded-xl bg-[#1877f2] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#166fe5] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Update password
+          </button>
+        </form>
+      </section>
+    </div>
+  </main>
+</div>
